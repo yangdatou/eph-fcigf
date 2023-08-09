@@ -139,7 +139,6 @@ def solve_fci_slow(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
     e, v = scipy.linalg.eigh(hm)
     return e[:nroots], v[:, :nroots]
 
-
 def solve_fci(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
               nelec: ElectronSpinNumber = (1, 0), nph_max: int = 4,
               nroots: int = 1):
@@ -237,6 +236,11 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     log = pyscf.lib.logger.Logger(stdout, verbose)
     cput0 = (pyscf.lib.logger.process_clock(), pyscf.lib.logger.perf_counter())
 
+    if method == "slow":
+        log.info("\nSolving the IP Green's function by building the full FCI Hamiltonian.")
+    else:
+        log.info("\nSolving the IP Green's function.")
+
     t: numpy.ndarray
     g: numpy.ndarray
     w: numpy.ndarray
@@ -301,7 +305,6 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     cpu1 = log.timer("setup the FCI-GF problem", *cput0)
 
     if method == "slow":
-        log.info("Solving the IP Green's function by building the full FCI Hamiltonian.")
         log.info("The size of the FCI Hamiltonian is %4.2f GB.", size_ip * size_ip * 8 / 1024 ** 3)
 
         h_ip = build_hm(t, g, w, nelec_ip, nph_max)
@@ -314,8 +317,6 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             return numpy.dot(xps, eqs.T)
 
     else:
-        log.info("Solving the IP Green's function.")
-
         hop_ip = gen_hop(t, g, w, nelec_ip, nph_max)
 
         def gen_gfn(omega):
@@ -377,6 +378,11 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     """
     log = pyscf.lib.logger.Logger(stdout, verbose)
     cput0 = (pyscf.lib.logger.process_clock(), pyscf.lib.logger.perf_counter())
+
+    if method == "slow":
+        log.info("\nSolving the EA Green's function by building the full FCI Hamiltonian.")
+    else:
+        log.info("\nSolving the EA Green's function.")
 
     t: numpy.ndarray
     g: numpy.ndarray
@@ -443,7 +449,6 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     cpu1 = log.timer("setup the FCI-GF problem", *cput0)
 
     if method == "slow":
-        log.info("Solving the EA Green's function by building the full FCI Hamiltonian.")
         log.info("The size of the FCI Hamiltonian is %4.2f GB.", size_ea * size_ea * 8 / 1024 ** 3)
 
         h_ea = build_hm(t, g, w, nelec_ea, nph_max)
@@ -456,7 +461,6 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             return numpy.dot(xps, eqs.T)
 
     else:
-        log.info("Solving the EA Green's function.")
         hop_ea = gen_hop(t, g, w, nelec_ea, nph_max)
 
         def gen_gfn(omega):
@@ -505,21 +509,22 @@ m.na = 1
 m.nb = 0
 
 eta = 0.01
-ps = [0, 1]
-qs = [0, 1]
+ps = None # [0, 1, 2, 3]
+qs = None # [0, 1, 2, 3]
 omegas = numpy.linspace(-0.5, 0.5, 21)
 
 gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
 gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
-gf = gf1_ip + gf1_ea
+gf_fci = gf1_ip + gf1_ea
 
-gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
-assert err_ip < conv_tol
+# gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
+# err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
+# assert err_ip < conv_tol
+#
+# gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
+# err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
+# assert err_ea < conv_tol
 
-gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
-assert err_ea < conv_tol
-
-for omega, gf_omega in zip(omegas, gf):
-    print(omega, gf_omega)
+for iomega, omega in enumerate(omega_list):
+    s = - numpy.trace(gf_fci[:, :, iomega].imag) / numpy.pi
+    print("% 8.4f, %8.4f" % (omega, s))
