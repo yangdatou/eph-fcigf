@@ -514,6 +514,7 @@ qs = None # [0, 1, 2, 3]
 omegas = numpy.linspace(-0.5, 0.5, 21)
 
 gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
+assert 1 == 2
 gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
 gf_fci = gf1_ip + gf1_ea
 
