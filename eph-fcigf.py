@@ -513,13 +513,13 @@ gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose
 gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
 gf = gf1_ip + gf1_ea
 
+gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
+err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
+assert err_ip < conv_tol
+
+gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
+err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
+assert err_ea < conv_tol
+
 for omega, gf_omega in zip(omegas, gf):
     print(omega, gf_omega)
-
-# gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-# err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
-# assert err_ip < conv_tol
-
-# gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-# err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
-# assert err_ea < conv_tol
