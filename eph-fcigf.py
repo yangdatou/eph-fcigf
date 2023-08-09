@@ -11,7 +11,7 @@ prod: Callable[[Tuple], int] = lambda x: reduce(lambda a, b: a * b, x)
 sys.path.append("/Users/yangjunjie/work/cc-eph/epcc-hol/")
 sys.path.append("/Users/yangjunjie/work/cc-eph/cqcpy-master/")
 
-MAX_MEMORY_MB = 2000  # MB
+MAX_MEMORY_MB = 8000.0  # MB
 MAX_MEMORY_GB = MAX_MEMORY_MB / 1024
 
 import pyscf
@@ -101,8 +101,9 @@ def build_hm(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
     size = prod(shape)
 
     # h2e_ip = fci_obj.absorb_h1e(h1e, eri, norb, nelec_ip, fac=0.5)
-    if size * size * 8 / 1024 ** 2 > MAX_MEMORY_MB:
-        print("Required memory in MB: ", size * size * 8 / 1024 ** 2)
+    if size * size * 8 / 1024 ** 3 > MAX_MEMORY_GB:
+        log = pyscf.lib.logger.Logger(sys.stdout, 4)
+        log.warn("Required memory in GB %6.4f", size * size * 8 / 1024 ** 3)
         raise ValueError("Not enough memory for EPH-FCI Hamiltonian.")
 
     hop = gen_hop(t, g, w, nelec=nelec, nph_max=nph_max)
@@ -205,7 +206,7 @@ def dump_hol_model(hol_obj):
     return t, g, w, nelec
 
 def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
-                 conv_tol=1e-8, max_cycle=100, m=40, method="slow",
+                 conv_tol=1e-8, max_cycle=100, m=40, method=None,
                  verbose=0, stdout=sys.stdout):
     """
     Compute the electron-phonon Green's function using the FCI method.
@@ -234,6 +235,7 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             The computed Green's function values.
     """
     log = pyscf.lib.logger.Logger(stdout, verbose)
+    cput0 = (pyscf.lib.logger.process_clock(), pyscf.lib.logger.perf_counter())
 
     t: numpy.ndarray
     g: numpy.ndarray
@@ -243,8 +245,10 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
 
     # For the IP problem, we need to remove one electron from the system
     # make sure the alpha electron is greater or equal to the beta electron.
-    nelec = sorted(nelec)
     assert nelec[0] >= nelec[1]
+
+    nelec_ip = (nelec[0] - 1, nelec[1])
+    assert nelec_ip[0] >= 0 and nelec_ip[1] >= 0
 
     nsite: int
     nmode: int
@@ -254,9 +258,6 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     assert t.shape == (nsite, nsite)
     assert g.shape == (nmode, nsite, nsite)
     assert w.shape == (nmode,)
-
-    nelec_ip = (nelec[0] - 1, nelec[1])
-    assert nelec_ip[0] >= 0 and nelec_ip[1] >= 0
 
     # Extract the information about the frequency and orbitals
     if ps is None:
@@ -297,8 +298,10 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     bps = numpy.asarray(bps).transpose((1, 2, 3, 0)).reshape(np, size_ip)
     eqs = numpy.asarray(eqs).transpose((1, 2, 3, 0)).reshape(nq, size_ip)
 
+    cpu1 = log.timer("setup the FCI-GF problem", *cput0)
+
     if method == "slow":
-        log.info("Solving the IP Green's function by the building the full FCI Hamiltonian.")
+        log.info("Solving the IP Green's function by building the full FCI Hamiltonian.")
         log.info("The size of the FCI Hamiltonian is %4.2f GB.", size_ip * size_ip * 8 / 1024 ** 3)
 
         h_ip = build_hm(t, g, w, nelec_ip, nph_max)
@@ -337,11 +340,17 @@ def eph_fcigf_ip(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             xps = xps.reshape(np, size_ip)
             return numpy.dot(xps, eqs.T)
 
+    cpu1 = log.timer("initialize the Hamiltonian", *cpu1)
+
+    # Solve the Green's function
     gfns_ip = numpy.asarray([gen_gfn(omega) for omega in omegas]).reshape((nomega, np, nq))
+    cpu1 = log.timer("solve the FCI-GF problem", *cpu1)
+
+    # Return the Green's function
     return gfns_ip
 
 def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
-                 conv_tol=1e-8, max_cycle=100, m=40, method="slow",
+                 conv_tol=1e-8, max_cycle=100, m=40, method=None,
                  verbose=0, stdout=sys.stdout):
     """
     Compute the electron-phonon Green's function using the FCI method.
@@ -367,12 +376,21 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             The computed Green's function values.
     """
     log = pyscf.lib.logger.Logger(stdout, verbose)
+    cput0 = (pyscf.lib.logger.process_clock(), pyscf.lib.logger.perf_counter())
 
     t: numpy.ndarray
     g: numpy.ndarray
     w: numpy.ndarray
     nelec: ElectronSpinNumber
     t, g, w, nelec = dump_hol_model(hol_obj)
+
+    # For the EA problem, we need to add one electron to the system
+    # make sure the alpha electron is greater than or equal to the beta electron.
+    # TODO: check this, it might be wrong
+    assert nelec[0] >= nelec[1]
+
+    nelec_ea = (nelec[0], nelec[1]+1)
+    assert nelec_ea[0] >= 0 and nelec_ea[1] >= 0
 
     nsite: int
     nmode: int
@@ -382,10 +400,6 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     assert t.shape == (nsite, nsite)
     assert g.shape == (nmode, nsite, nsite)
     assert w.shape == (nmode,)
-
-    # TODO: check this, it might be wrong
-    nelec_ea = _nelec_ea(nelec)
-    assert nelec_ea[0] >= 0 and nelec_ea[1] >= 0
 
     # Extract the information about the frequency and orbitals
     if ps is None:
@@ -421,39 +435,40 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     assert hdiag_ea.shape == (size_ea,)
 
     # Build the RHS and LHS of the response equation
-    bps = [[pyscf.fci.addons.des_a(c, nsite, nelec, p) for p in ps] for c in c_fci.reshape(ndet_alph * ndet_beta, -1).T]
-    eqs = [[pyscf.fci.addons.des_a(c, nsite, nelec, q) for q in qs] for c in c_fci.reshape(ndet_alph * ndet_beta, -1).T]
+    bps = [[pyscf.fci.addons.cre_b(c, nsite, nelec, p) for p in ps] for c in c_fci.reshape(ndet_alph * ndet_beta, -1).T]
+    eqs = [[pyscf.fci.addons.cre_b(c, nsite, nelec, q) for q in qs] for c in c_fci.reshape(ndet_alph * ndet_beta, -1).T]
     bps = numpy.asarray(bps).transpose((1, 2, 3, 0)).reshape(np, size_ea)
     eqs = numpy.asarray(eqs).transpose((1, 2, 3, 0)).reshape(nq, size_ea)
 
+    cpu1 = log.timer("setup the FCI-GF problem", *cput0)
+
     if method == "slow":
-        log.info("Solving the IP Green's function by the building the full FCI Hamiltonian.")
+        log.info("Solving the EA Green's function by building the full FCI Hamiltonian.")
         log.info("The size of the FCI Hamiltonian is %4.2f GB.", size_ea * size_ea * 8 / 1024 ** 3)
 
         h_ea = build_hm(t, g, w, nelec_ea, nph_max)
         assert h_ea.shape == (size_ea, size_ea)
 
         def gen_gfn(omega):
-            omega_e0_eta_ea = omega - ene_fci - 1j * eta
-            h_ea_omega = h_ea + omega_e0_eta_ea * numpy.eye(size_ea)
+            omega_e0_eta_ea = omega + ene_fci + 1j * eta
+            h_ea_omega = - h_ea + omega_e0_eta_ea * numpy.eye(size_ea)
             xps = numpy.linalg.solve(h_ea_omega, bps.T).T
             return numpy.dot(xps, eqs.T)
 
     else:
-        log.info("Solving the IP Green's function.")
-
+        log.info("Solving the EA Green's function.")
         hop_ea = gen_hop(t, g, w, nelec_ea, nph_max)
 
         def gen_gfn(omega):
-            omega_e0_eta_ea = omega - ene_fci - 1j * eta
-            hdiag_ea_omega = hdiag_ea + omega_e0_eta_ea
+            omega_e0_eta_ea = omega + ene_fci + 1j * eta
+            hdiag_ea_omega = - hdiag_ea + omega_e0_eta_ea
 
             def h_ea_omega(v):
                 assert v.shape == (size_ea,)
                 hv_real = hop_ea(v.real)
                 hv_imag = hop_ea(v.imag)
 
-                hv = hv_real + 1j * hv_imag
+                hv = - (hv_real + 1j * hv_imag)
                 hv += omega_e0_eta_ea * v
 
                 return hv.reshape((size_ea,))
@@ -466,13 +481,19 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
             xps = xps.reshape(np, size_ea)
             return numpy.dot(xps, eqs.T)
 
+    cpu1 = log.timer("initialize the Hamiltonian", *cpu1)
+
+    # Solve the Green's function
     gfns_ea = numpy.asarray([gen_gfn(omega) for omega in omegas]).reshape((nomega, np, nq))
+    cpu1 = log.timer("solve the FCI-GF problem", *cpu1)
+
+    # Return the Green's function
     return gfns_ea
 
-nsite = 4
-nmode = 4
+nsite = 6
+nmode = 6
 nelec = (1, 0)
-nph_max = 6
+nph_max  = 4
 conv_tol = 1e-6
 
 m = HolModel(
@@ -488,12 +509,17 @@ ps = [0, 1]
 qs = [0, 1]
 omegas = numpy.linspace(-0.5, 0.5, 21)
 
-gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow")
-gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, conv_tol=conv_tol)
-err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
-assert err_ip < conv_tol
+gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
+gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
+gf = gf1_ip + gf1_ea
 
-# gf1_ea = eph_fcigf_ea_slow(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max)
-# gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, conv_tol=conv_tol)
+for omega, gf_omega in zip(omegas, gf):
+    print(omega, gf_omega)
+
+# gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
+# err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
+# assert err_ip < conv_tol
+
+# gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
 # err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
 # assert err_ea < conv_tol
