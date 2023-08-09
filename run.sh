@@ -22,8 +22,12 @@ mkdir -p /scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 export PYSCF_TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 
-export PYTHONPATH=/home/yangjunjie/packages/pyscf/pyscf-main/;
-# export PYTHONPATH=/home/yangjunjie/work/cas-diag-cc/:$PYTHONPATH;
+export PYTHONPATH=/home/yangjunjie/packages/pyscf/pyscf-main/
+export PYTHONPATH=/home/yangjunjie/work/cc-eph/cceph-main/:$PYTHONPATH
+export PYTHONPATH=/home/yangjunjie/work/cc-eph/epcc-hol/:$PYTHONPATH
+export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
+export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 export PYTHONUNBUFFERED=TRUE;
+python eph-fcigf.py
 

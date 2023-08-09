@@ -28,8 +28,7 @@ def _unpack(v=None, vs=None):
     return res
 
 
-def gmres(h: (Callable | numpy.ndarray),
-          bs: OptionalArray = None, b: OptionalArray = None,
+def gmres(h, bs: OptionalArray = None, b: OptionalArray = None,
           xs0: OptionalArray = None, x0: OptionalArray = None,
           diag: OptionalArray = None,
           m: int = 30, tol: float = 1e-6, max_cycle: int = 200,
