@@ -494,10 +494,10 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
     # Return the Green's function
     return gfns_ea
 
-nsite = 6
-nmode = 6
+nsite = 4
+nmode = 4
 nelec = (1, 0)
-nph_max  = 4
+nph_max  = 10
 conv_tol = 1e-6
 
 m = HolModel(
@@ -525,6 +525,6 @@ gf_fci = gf1_ip + gf1_ea
 # err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
 # assert err_ea < conv_tol
 
-for iomega, omega in enumerate(omega_list):
+for iomega, omega in enumerate(omegas):
     s = - numpy.trace(gf_fci[:, :, iomega].imag) / numpy.pi
     print("% 8.4f, %8.4f" % (omega, s))

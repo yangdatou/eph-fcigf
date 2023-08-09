@@ -11,9 +11,15 @@ module load gcc/9.2.0
 module load binutils/2.26
 module load cmake-3.6.2 
 
-export OMP_NUM_THREADS=28;
-export MKL_NUM_THREADS=28;
+export OMP_NUM_THREADS=56;
+export MKL_NUM_THREADS=56;
+export OPENBLAS_NUM_THREADS=56;
 export PYSCF_MAX_MEMORY=$SLURM_MEM_PER_NODE;
+
+echo OMP_NUM_THREADS=$OMP_NUM_THREADS
+echo MKL_NUM_THREADS=$MKL_NUM_THREADS
+echo OPENBLAS_NUM_THREADS=$OPENBLAS_NUM_THREADS
+echo PYSCF_MAX_MEMORY=$PYSCF_MAX_MEMORY
 
 source /home/yangjunjie/intel/oneapi/setvars.sh --force;
 export LD_LIBRARY_PATH=$MKLROOT/lib:$LD_LIBRARY_PATH
@@ -29,5 +35,5 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 export PYTHONUNBUFFERED=TRUE;
-python eph-fcigf.py
+time python eph-fcigf.py
 
