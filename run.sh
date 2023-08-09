@@ -2,7 +2,7 @@
 #SBATCH --partition=debug
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=28
+#SBATCH --ntasks=28
 #SBATCH --mem=0
 #SBATCH --output=out.log
 
@@ -11,8 +11,7 @@ module load gcc/9.2.0
 module load binutils/2.26
 module load cmake-3.6.2
 
-export NCORES=$SLURM_CPUS_PER_TASK;
-export NCORES=4;
+export NCORES=$SLURM_NTASKS;
 export OMP_NUM_THREADS=$NCORES;
 export MKL_NUM_THREADS=$NCORES
 export OPENBLAS_NUM_THREADS=$NCORES

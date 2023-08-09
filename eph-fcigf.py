@@ -497,7 +497,7 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
 nsite = 4
 nmode = 4
 nelec = (1, 0)
-nph_max  = 10
+nph_max  = 20
 conv_tol = 1e-6
 
 m = HolModel(
