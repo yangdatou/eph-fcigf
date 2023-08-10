@@ -41,5 +41,5 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 time \
 mpirun -n 40 python main.py
 
-mv ./out/%x-%j-slurm.log ./out/%x-%j/slurm.log
+mv ./out/$SLURM_JOB_NAME-$SLURM_JOB_ID-slurm.log $LOG_TMPDIR/slurm.log
 
