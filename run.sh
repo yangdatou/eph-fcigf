@@ -2,7 +2,7 @@
 #SBATCH --partition=debug
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks=28
+#SBATCH --ntasks=20
 #SBATCH --mem=0
 #SBATCH --output=out.log
 
@@ -11,12 +11,12 @@ module load gcc/9.2.0
 module load binutils/2.26
 module load cmake-3.6.2
 
-export NCORES=$SLURM_CPUS_PER_TASK;
-export OMP_NUM_THREADS=$NCORES;
-export MKL_NUM_THREADS=$NCORES
-export OPENBLAS_NUM_THREADS=$NCORES
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
+export MKL_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OPENBLAS_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export PYSCF_MAX_MEMORY=$SLURM_MEM_PER_NODE;
 
+echo SLURM_NTASKS         = $SLURM_NTASKS
 echo OMP_NUM_THREADS      = $OMP_NUM_THREADS
 echo MKL_NUM_THREADS      = $MKL_NUM_THREADS
 echo OPENBLAS_NUM_THREADS = $OPENBLAS_NUM_THREADS
@@ -35,6 +35,6 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/epcc-hol/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
-export PYTHONUNBUFFERED=TRUE;
-time python main.py
+time \
+mpirun -n $SLURM_NTASKS python run.py
 

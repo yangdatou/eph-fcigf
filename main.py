@@ -7,31 +7,37 @@ from epcc.fci import contract_1e
 from epcc.fci import contract_ep_rspace as contract_ep
 from epcc.fci import contract_pp
 
-
 from ephfcigf import eph_fcigf_ip, eph_fcigf_ea
 
 def main():
-    nsite = 4
-    nmode = 4
-    nelec = (1, 0)
+    from mpi4py import MPI
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-    nph_max  = 20
-    conv_tol = 1e-6
-
-    m = HolModel(
-        nsite, nmode, nelec[0] + nelec[1],
-        1.0, 0.1, bc='p', gij=None,
-        ca=numpy.eye(nsite), cb=None
-    )
-    m.na = 1
-    m.nb = 0
-
-    eta = 0.01
-    ps = None # [0, 1, 2, 3]
-    qs = None # [0, 1, 2, 3]
-    omegas = numpy.linspace(-0.5, 0.5, 21)
-
-    gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
+    print("rank = %d, size = %d" % (rank, size))
+    
+    # nsite = 4
+    # nmode = 4
+    # nelec = (1, 0)
+    #
+    # nph_max  = 20
+    # conv_tol = 1e-6
+    #
+    # m = HolModel(
+    #     nsite, nmode, nelec[0] + nelec[1],
+    #     1.0, 0.1, bc='p', gij=None,
+    #     ca=numpy.eye(nsite), cb=None
+    # )
+    # m.na = 1
+    # m.nb = 0
+    #
+    # eta = 0.01
+    # ps = None # [0, 1, 2, 3]
+    # qs = None # [0, 1, 2, 3]
+    # omegas = numpy.linspace(-0.5, 0.5, 21)
+    #
+    # gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
 
     # assert 1 == 2
     # gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
