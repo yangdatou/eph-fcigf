@@ -10,7 +10,7 @@ from epcc.fci import contract_pp
 from ephfcigf import eph_fcigf_ip, eph_fcigf_ea
 
 def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
-    eta = 0.02
+    eta = 0.04
     gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf_fci = gf1_ip + gf1_ea
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    nomega_total = 32
+    nomega_total = 128
     nomega = nomega_total // size
     assert nomega * size == nomega_total
 
@@ -39,8 +39,7 @@ if __name__ == '__main__':
     nmode = 4
     nelec = (1, 0)
 
-    nph_max  = 5
-    conv_tol = 1e-6
+    nph_max  = 8
 
     m = HolModel(
         nsite, nmode, nelec[0] + nelec[1],
