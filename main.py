@@ -35,17 +35,17 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    nomega_total = 120
+    nomega_total = 160
     nomega = nomega_total // size
     assert nomega * size == nomega_total
 
-    log = "%s/log-%02d.out" % (os.environ['LOG_TMPDIR'], rank)
+    log = "%s/%02d.log" % (os.environ['LOG_TMPDIR'], rank)
 
     nsite = 4
     nmode = 4
     nelec = (1, 0)
 
-    nph_max  = 8
+    nph_max  = 10
 
     m = HolModel(
         nsite, nmode, nelec[0] + nelec[1],
@@ -65,6 +65,8 @@ if __name__ == '__main__':
         gf_fci = numpy.concatenate(tmp, axis=0)
         assert gf_fci.shape == (nomega_total, nsite, nsite)
 
-        for iomega, omega in enumerate(omegas.reshape(-1)):
-            s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
-            print("omega = % 6.4f, s = % 12.8f" % (omega, s))
+        with open("gf.out", 'w') as f:
+            for iomega, omega in enumerate(omegas.reshape(-1)):
+                s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
+                print("omega = % 6.4f, s = % 12.8f" % (omega, s))
+                f.write("% 6.4f, % 12.8f\n" % (omega, s))

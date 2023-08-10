@@ -5,7 +5,7 @@
 #SBATCH --ntasks-per-node=28
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
-#SBATCH --output=./out/%x-%j.out
+#SBATCH --output=./out/%x-%j/slurm.log
 
 module purge
 module load gcc/9.2.0
@@ -40,4 +40,3 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 time \
 mpirun -n 40 python main.py
-
