@@ -2,9 +2,10 @@
 #SBATCH --partition=debug
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks=20
+#SBATCH --ntasks-per-node=40
 #SBATCH --mem=0
-#SBATCH --output=out.log
+#SBATCH --job-name=eph-fcigf
+#SBATCH --output=./out/$SLURM_JOB_NAME-$SLURM_JOB_ID.out
 
 module purge
 module load gcc/9.2.0

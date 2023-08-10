@@ -29,7 +29,7 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    nomega_total = 128
+    nomega_total = 120
     nomega = nomega_total // size
     assert nomega * size == nomega_total
 
