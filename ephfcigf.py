@@ -23,43 +23,88 @@ from epcc.fci import contract_pp
 # import .lib
 from lib import gmres
 
+def _check_g(g: numpy.ndarray, nsite: int, nmode: int) -> bool:
+    gg = numpy.zeros((nmode, nsite, nsite))
+    for i in range(nsite):
+        g[i, i, i] = g[0, 0, 0]
+
+    err = numpy.linalg.norm(g - gg)
+    return err < 1e-10
+
 def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
-            nelec: ElectronSpinNumber = (1, 0), nph_max: int = 4) -> Callable:
-    r"""
-    This function generates the Hamiltonian operator in the Fock space:
-        :math:`H c_I |\Psi_I\rangle = s_{IJ} c_J |\Psi_J\rangle`
-
-    Args:
-        t: numpy.ndarray (nsite, nsite)
-            hopping matrix
-        g: numpy.ndarray (nmode, nsite, nsite)
-            electron-phonon coupling matrix
-        w: numpy.ndarray (nmode, )
-            phonon frequency matrix
-        nelec: ElectronSpinNumber
-            number of electrons
-        nph_max: int
-            maximum number of phonons
-
-    Returns:
-        hop: Callable
-            a function that takes a vector and returns the Hamiltonian vector product
-    """
+            nelec: ElectronSpinNumber = (1, 0), nph_max: int = 4,
+            method="epcc") -> Callable:
     nsite = t.shape[0]
     nmode = g.shape[0]
 
     assert t.shape == (nsite, nsite)
     assert g.shape == (nmode, nsite, nsite)
-    assert w.shape == (nmode,)
+    # assert w.shape == (nmode,)
 
+    import epcc.fci
     shape = epcc.fci.make_shape(nsite, nelec, nmode, nph_max, e_only=False)
 
-    def hop(v):
-        c = v.reshape(shape)
-        hc = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r")
-        hc += contract_ep(g, c, nsite, nelec, nmode, nph_max)
-        hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None)
-        return hc.reshape(-1)
+    if method == "epcc":
+        import epcc.fci
+        from epcc.hol_model import HolModel
+        from epcc.fci import contract_1e
+        from epcc.fci import contract_ep_rspace as contract_ep
+        from epcc.fci import contract_pp
+
+        # noinspection PyArgumentList
+        def hop(v):
+            c = v.reshape(shape)
+            hc = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r") * 0.0
+            hc += contract_ep(g, c, nsite, nelec, nmode, nph_max)  # * 0.0
+            hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None) * 0.0
+            return hc.reshape(-1)
+
+    else:
+        from pyscf.fci import direct_ep, cistring
+        from pyscf.fci.direct_ep import contract_1e
+        from pyscf.fci.direct_ep import contract_pp
+        from pyscf.fci.direct_ep import _unpack_nelec
+        from pyscf.fci.direct_ep import make_shape
+        from pyscf.fci.direct_ep import slices_for_cre
+        from pyscf.fci.direct_ep import slices_for
+
+        # Notice that shall have identical value on the diagonal.
+        # Must check.
+        assert _check_g(g, nsite, nmode)
+        tt = t
+        gg = g[0, 0, 0]
+        ww = numpy.diag(w)
+
+        def contract_ep(g, fcivec, nsite, nelec, nphonon):
+            neleca, nelecb = _unpack_nelec(nelec)
+            strsa = numpy.asarray(cistring.gen_strings4orblist(range(nsite), neleca))
+            strsb = numpy.asarray(cistring.gen_strings4orblist(range(nsite), nelecb))
+            cishape = make_shape(nsite, nelec, nphonon)
+            na, nb = cishape[:2]
+            ci0 = fcivec.reshape(cishape)
+            fcinew = numpy.zeros(cishape)
+
+            phonon_cre = numpy.sqrt(numpy.arange(1, nphonon + 1))
+            for i in range(nsite):
+                maska = (strsa & (1 << i)) > 0
+                maskb = (strsb & (1 << i)) > 0
+                e_part = numpy.zeros((na, nb))
+                e_part[maska, :] += 1
+                e_part[:, maskb] += 1
+                # e_part[:] -= float(neleca+nelecb) / nsite
+                for ip in range(nphonon):
+                    slices1 = slices_for_cre(i, nsite, ip)
+                    slices0 = slices_for(i, nsite, ip)
+                    fcinew[slices1] += numpy.einsum('ij...,ij...->ij...', g * phonon_cre[ip] * e_part, ci0[slices0])
+                    fcinew[slices0] += numpy.einsum('ij...,ij...->ij...', g * phonon_cre[ip] * e_part, ci0[slices1])
+            return fcinew.reshape(fcivec.shape)
+
+        def hop(v):
+            c = v.reshape(shape)
+            hc = contract_1e(tt, c, nsite, nelec, nph_max) * 0.0
+            hc += contract_ep(gg, c, nsite, nelec, nph_max)  # * 0.0
+            hc += contract_pp(ww, c, nsite, nelec, nph_max) * 0.0
+            return hc.reshape(-1)
 
     return hop
 
