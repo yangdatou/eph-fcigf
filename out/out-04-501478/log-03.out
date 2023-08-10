@@ -1,0 +1,102 @@
+
+Solving the IP Green's function.
+    CPU time for setup the FCI-GF problem      1.06 sec, wall time      1.07 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0961e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0808e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0660e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0515e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0374e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0237e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0104e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 9.9736e-02
+    CPU time for solve the FCI-GF problem      0.07 sec, wall time      0.07 sec
+
+Solving the EA Green's function.
+    CPU time for setup the FCI-GF problem      1.09 sec, wall time      1.09 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.8866e-01
+GMRES: iter =    2, residual = 1.2600e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.9414e-01
+GMRES: iter =    2, residual = 1.1343e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.9983e-01
+GMRES: iter =    2, residual = 1.0323e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.0575e-01
+GMRES: iter =    2, residual = 9.4814e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.1191e-01
+GMRES: iter =    2, residual = 8.7758e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.1832e-01
+GMRES: iter =    2, residual = 8.1774e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.2499e-01
+GMRES: iter =    2, residual = 7.6649e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.3196e-01
+GMRES: iter =    2, residual = 7.2226e-01
+    CPU time for solve the FCI-GF problem     85.65 sec, wall time     85.59 sec
+omega = 0.274194, s = 0.006643
+omega = 0.306452, s = 0.004981
+omega = 0.338710, s = -0.006679
+omega = 0.370968, s = -0.004923
