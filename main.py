@@ -16,7 +16,7 @@ def main():
     size = comm.Get_size()
 
     print("rank = %d, size = %d" % (rank, size))
-    
+
     # nsite = 4
     # nmode = 4
     # nelec = (1, 0)

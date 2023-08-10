@@ -36,5 +36,5 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 time \
-mpirun -n $SLURM_NTASKS python run.py
+mpirun -n $SLURM_NTASKS python main.py
 
