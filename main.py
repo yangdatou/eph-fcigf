@@ -10,6 +10,12 @@ from epcc.fci import contract_pp
 from ephfcigf import eph_fcigf_ip, eph_fcigf_ea
 
 def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
+    log.write("nph_max = %d\n" % nph_max)
+    log.write("omegas  = \n" % omegas)
+    for omega in omegas:
+        log.write("% 6.4f\n" % omega)
+    log.write("\n")
+
     eta = 0.04
     gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
@@ -18,7 +24,7 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     log.write("\n")
     for iomega, omega in enumerate(omegas):
         s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
-        log.write("omega = %f, s = %f\n" % (omega, s))
+        log.write("omega = % 12.8f, s = % 12.8f\n" % (omega, s))
 
     return gf_fci
 
@@ -49,11 +55,8 @@ if __name__ == '__main__':
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-10.0, 10.0, nomega_total)
-    res    = solve(
-        omegas[rank * nomega : (rank + 1) * nomega],
-        nph_max=nph_max, m=m, log=open(log, 'w')
-    )
+    omegas = numpy.linspace(-10.0, 10.0, nomega_total).reshape(nomega, size)
+    res    = solve(omegas[:, rank], nph_max=nph_max, m=m, log=open(log, 'w'))
     assert res.shape == (nomega, nsite, nsite)
 
     tmp = comm.gather(res, root=0)
@@ -61,6 +64,8 @@ if __name__ == '__main__':
     if rank == 0:
         gf_fci = numpy.concatenate(tmp, axis=0)
         assert gf_fci.shape == (nomega_total, nsite, nsite)
+        gf_fci = gf_fci.reshape(nomega, size, nsite, nsite).transpose(1, 0, 2, 3)
+        gf_fci = gf_fci.reshape(nomega_total, nsite, nsite)
 
         for iomega, omega in enumerate(omegas):
             s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
