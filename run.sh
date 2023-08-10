@@ -1,19 +1,19 @@
 #!/bin/bash
 #SBATCH --partition=debug
-#SBATCH --time=00:05:00
+#SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=28
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
-#SBATCH --exclude=pauling013
+#SBATCH --output=/scratch/global/yangjunjie/slurm-%x-%j.log
 
-export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
-export PYSCF_TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
+export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+export PYSCF_TMPDIR=TMPDIR
 export LOG_TMPDIR=$SLURM_SUBMIT_DIR/out/$SLURM_JOB_NAME-$SLURM_JOB_ID/
 mkdir -p $TMPDIR
 mkdir -p $LOG_TMPDIR
 
-#SBATCH --output=./out/%x-%j/slurm.log
+tail -f /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log > LOG_TMPDIR/slurm.out 
 
 module purge
 module load gcc/9.2.0
@@ -41,4 +41,14 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 time \
-mpirun -n 40 python main.py
+mpirun -n 1 python main.py
+
+time \
+mpirun -n 4 python main.py
+
+time \
+mpirun -n 16 python main.py
+
+time \
+mpirun -n 64 python main.py
+
