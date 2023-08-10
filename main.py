@@ -49,14 +49,12 @@ if __name__ == '__main__':
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-0.5, 0.5, nomega_total)
+    omegas = numpy.linspace(-10.0, 10.0, nomega_total)
     res    = solve(
         omegas[rank * nomega : (rank + 1) * nomega],
         nph_max=nph_max, m=m, log=open(log, 'w')
     )
-
     assert res.shape == (nomega, nsite, nsite)
-    print("Rank %d finished." % rank)
 
     tmp = comm.gather(res, root=0)
 
