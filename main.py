@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, time
 import numpy, scipy
 
 import epcc.fci
@@ -10,6 +10,7 @@ from epcc.fci import contract_pp
 from ephfcigf import eph_fcigf_ip, eph_fcigf_ea
 
 def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
+    t0 = time.time()
     log.write("nph_max = %d\n" % nph_max)
     log.write("omegas  = \n" % omegas)
     for omega in omegas:
@@ -25,6 +26,9 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     for iomega, omega in enumerate(omegas):
         s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
         log.write("omega = % 12.8f, s = % 12.8f\n" % (omega, s))
+
+    log.write("\n")
+    log.write("Wall time to solve the Green's function: % 6.4f min\n" % ((time.time() - t0) / 60.0))
 
     return gf_fci
 
