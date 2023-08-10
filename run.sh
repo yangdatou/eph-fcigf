@@ -25,9 +25,11 @@ echo PYSCF_MAX_MEMORY     = $PYSCF_MAX_MEMORY
 source /home/yangjunjie/intel/oneapi/setvars.sh --force;
 export LD_LIBRARY_PATH=$MKLROOT/lib:$LD_LIBRARY_PATH
 
-mkdir -p /scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 export PYSCF_TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
+export LOG_TMPDIR=$SLURM_SUBMIT_DIR/log/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+mkdir -p $TMPDIR
+mkdir -p $LOG_TMPDIR
 
 export PYTHONPATH=/home/yangjunjie/packages/pyscf/pyscf-main/
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cceph-main/:$PYTHONPATH
