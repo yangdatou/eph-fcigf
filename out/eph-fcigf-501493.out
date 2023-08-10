@@ -1,0 +1,176 @@
+SLURM_NTASKS = 20
+OMP_NUM_THREADS =
+MKL_NUM_THREADS =
+OPENBLAS_NUM_THREADS =
+PYSCF_MAX_MEMORY = 256000
+ 
+:: initializing oneAPI environment ...
+   slurm_script: BASH_VERSION = 4.2.46(1)-release
+   args: Using "$@" for setvars.sh arguments: --force
+:: advisor -- latest
+:: ccl -- latest
+:: clck -- latest
+:: compiler -- latest
+:: dal -- latest
+:: debugger -- latest
+:: dev-utilities -- latest
+:: dnnl -- latest
+:: dpcpp-ct -- latest
+:: dpl -- latest
+:: inspector -- latest
+:: intelpython -- latest
+:: ipp -- latest
+:: ippcp -- latest
+:: ipp -- latest
+:: itac -- latest
+:: mkl -- latest
+:: mpi -- latest
+:: tbb -- latest
+:: vpl -- latest
+:: vtune -- latest
+:: oneAPI environment initialized ::
+ 
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+OMP: Warning #235: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+omega = -10.0000, s =   0.00034337
+omega = -9.8319, s =   0.00035469
+omega = -9.6639, s =   0.00036659
+omega = -9.4958, s =   0.00037910
+omega = -9.3277, s =   0.00039227
+omega = -9.1597, s =   0.00040614
+omega = -8.9916, s =   0.00042076
+omega = -8.8235, s =   0.00043620
+omega = -8.6555, s =   0.00045250
+omega = -8.4874, s =   0.00046974
+omega = -8.3193, s =   0.00048800
+omega = -8.1513, s =   0.00050735
+omega = -7.9832, s =   0.00052788
+omega = -7.8151, s =   0.00054969
+omega = -7.6471, s =   0.00057290
+omega = -7.4790, s =   0.00059762
+omega = -7.3109, s =   0.00062399
+omega = -7.1429, s =   0.00065216
+omega = -6.9748, s =   0.00068230
+omega = -6.8067, s =   0.00071460
+omega = -6.6387, s =   0.00074927
+omega = -6.4706, s =   0.00078655
+omega = -6.3025, s =   0.00082672
+omega = -6.1345, s =   0.00087007
+omega = -5.9664, s =   0.00091696
+omega = -5.7983, s =   0.00096779
+omega = -5.6303, s =   0.00102299
+omega = -5.4622, s =   0.00108310
+omega = -5.2941, s =   0.00114871
+omega = -5.1261, s =   0.00122049
+omega = -4.9580, s =   0.00129923
+omega = -4.7899, s =   0.00138589
+omega = -4.6218, s =   0.00148139
+omega = -4.4538, s =   0.00158687
+omega = -4.2857, s =   0.00170326
+omega = -4.1176, s =   0.00182844
+omega = -3.9496, s =   0.00196026
+omega = -3.7815, s =   0.00213016
+omega = -3.6134, s =   0.00229228
+omega = -3.4454, s =   0.00243031
+omega = -3.2773, s =   0.00238313
+omega = -3.1092, s =   0.00004552
+omega = -2.9412, s =  -0.00346403
+omega = -2.7731, s =   0.00346230
+omega = -2.6050, s =   0.00473865
+omega = -2.4370, s =   0.00644067
+omega = -2.2689, s =   0.01241263
+omega = -2.1008, s =   0.11726488
+omega = -1.9328, s =  -0.17813998
+omega = -1.7647, s =   0.00080341
+omega = -1.5966, s =   0.00948321
+omega = -1.4286, s =   0.01352707
+omega = -1.2605, s =   0.01858296
+omega = -1.0924, s =   0.03532162
+omega = -0.9244, s =   0.04165663
+omega = -0.7563, s =   0.04813936
+omega = -0.5882, s =   0.07724902
+omega = -0.4202, s =   0.15013115
+omega = -0.2521, s =   0.41715069
+omega = -0.0840, s =   3.46528753
+omega =  0.0840, s =   2.50503087
+omega =  0.2521, s =   0.36870439
+omega =  0.4202, s =   0.14216704
+omega =  0.5882, s =   0.07827531
+omega =  0.7563, s =   0.05481203
+omega =  0.9244, s =   0.07390052
+omega =  1.0924, s =   0.05218237
+omega =  1.2605, s =   0.04144902
+omega =  1.4286, s =   0.05201142
+omega =  1.5966, s =   0.08796958
+omega =  1.7647, s =   0.23379033
+omega =  1.9328, s =   2.17462235
+omega =  2.1008, s =   1.05343722
+omega =  2.2689, s =   0.17405450
+omega =  2.4370, s =   0.06958523
+omega =  2.6050, s =   0.03821212
+omega =  2.7731, s =   0.02508794
+omega =  2.9412, s =   0.02545128
+omega =  3.1092, s =   0.01574994
+omega =  3.2773, s =   0.01060030
+omega =  3.4454, s =   0.00838130
+omega =  3.6134, s =   0.00690348
+omega =  3.7815, s =   0.00582479
+omega =  3.9496, s =   0.00501903
+omega =  4.1176, s =   0.00435518
+omega =  4.2857, s =   0.00382957
+omega =  4.4538, s =   0.00340164
+omega =  4.6218, s =   0.00304600
+omega =  4.7899, s =   0.00274648
+omega =  4.9580, s =   0.00249107
+omega =  5.1261, s =   0.00227169
+omega =  5.2941, s =   0.00208137
+omega =  5.4622, s =   0.00191509
+omega =  5.6303, s =   0.00176875
+omega =  5.7983, s =   0.00163915
+omega =  5.9664, s =   0.00152389
+omega =  6.1345, s =   0.00142072
+omega =  6.3025, s =   0.00132817
+omega =  6.4706, s =   0.00124456
+omega =  6.6387, s =   0.00116884
+omega =  6.8067, s =   0.00110003
+omega =  6.9748, s =   0.00103726
+omega =  7.1429, s =   0.00097993
+omega =  7.3109, s =   0.00092724
+omega =  7.4790, s =   0.00087885
+omega =  7.6471, s =   0.00083417
+omega =  7.8151, s =   0.00079292
+omega =  7.9832, s =   0.00075473
+omega =  8.1513, s =   0.00071928
+omega =  8.3193, s =   0.00068632
+omega =  8.4874, s =   0.00065561
+omega =  8.6555, s =   0.00062695
+omega =  8.8235, s =   0.00060017
+omega =  8.9916, s =   0.00057509
+omega =  9.1597, s =   0.00055156
+omega =  9.3277, s =   0.00052948
+omega =  9.4958, s =   0.00050871
+omega =  9.6639, s =   0.00048915
+omega =  9.8319, s =   0.00047072
+omega =  10.0000, s =   0.00045332
+
+real	11m18.572s
+user	0m0.011s
+sys	0m0.025s

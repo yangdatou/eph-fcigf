@@ -2,20 +2,20 @@
 #SBATCH --partition=debug
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=40
+#SBATCH --ntasks-per-node=28
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
-#SBATCH --output=./out/$SLURM_JOB_NAME-$SLURM_JOB_ID.out
+#SBATCH --output=./out/%x-%j.out
 
 module purge
 module load gcc/9.2.0
 module load binutils/2.26
 module load cmake-3.6.2
 
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
-export MKL_NUM_THREADS=$SLURM_CPUS_PER_TASK
-export OPENBLAS_NUM_THREADS=$SLURM_CPUS_PER_TASK
-export PYSCF_MAX_MEMORY=$SLURM_MEM_PER_NODE;
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export PYSCF_MAX_MEMORY=$SLURM_MEM_PER_NODE
 
 echo SLURM_NTASKS         = $SLURM_NTASKS
 echo OMP_NUM_THREADS      = $OMP_NUM_THREADS
@@ -39,5 +39,5 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 time \
-mpirun -n $SLURM_NTASKS python main.py
+mpirun -n 40 python main.py
 
