@@ -5,6 +5,7 @@
 #SBATCH --ntasks-per-node=28
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
+#SBATCH --exclude=pauling013
 
 export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
 export PYSCF_TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
