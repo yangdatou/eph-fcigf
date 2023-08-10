@@ -11,7 +11,7 @@ module load gcc/9.2.0
 module load binutils/2.26
 module load cmake-3.6.2
 
-export NCORES=$SLURM_NTASKS;
+export NCORES=$SLURM_CPUS_PER_TASK;
 export OMP_NUM_THREADS=$NCORES;
 export MKL_NUM_THREADS=$NCORES
 export OPENBLAS_NUM_THREADS=$NCORES

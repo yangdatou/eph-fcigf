@@ -8,9 +8,6 @@ import scipy
 ElectronSpinNumber = Tuple[int, int]
 prod: Callable[[Tuple], int] = lambda x: reduce(lambda a, b: a * b, x)
 
-sys.path.append("/Users/yangjunjie/work/cc-eph/epcc-hol/")
-sys.path.append("/Users/yangjunjie/work/cc-eph/cqcpy-master/")
-
 MAX_MEMORY_MB = 8000.0  # MB
 MAX_MEMORY_GB = MAX_MEMORY_MB / 1024
 
@@ -25,7 +22,6 @@ from epcc.fci import contract_pp
 
 # import .lib
 from lib import gmres
-
 
 def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
             nelec: ElectronSpinNumber = (1, 0), nph_max: int = 4) -> Callable:
@@ -493,39 +489,3 @@ def eph_fcigf_ea(hol_obj, omegas=None, ps=None, qs=None, nph_max=4, eta=0.01,
 
     # Return the Green's function
     return gfns_ea
-
-nsite = 4
-nmode = 4
-nelec = (1, 0)
-nph_max  = 20
-conv_tol = 1e-6
-
-m = HolModel(
-    nsite, nmode, nelec[0] + nelec[1],
-    1.0, 0.1, bc='p', gij=None,
-    ca=numpy.eye(nsite), cb=None
-)
-m.na = 1
-m.nb = 0
-
-eta = 0.01
-ps = None # [0, 1, 2, 3]
-qs = None # [0, 1, 2, 3]
-omegas = numpy.linspace(-0.5, 0.5, 21)
-
-gf1_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
-assert 1 == 2
-gf1_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, verbose=5, stdout=sys.stdout)
-gf_fci = gf1_ip + gf1_ea
-
-# gf2_ip = eph_fcigf_ip(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-# err_ip = numpy.linalg.norm(gf1_ip - gf2_ip)
-# assert err_ip < conv_tol
-#
-# gf2_ea = eph_fcigf_ea(m, omegas, ps=ps, qs=qs, eta=eta, nph_max=nph_max, method="slow", conv_tol=conv_tol, verbose=5, stdout=sys.stdout)
-# err_ea = numpy.linalg.norm(gf1_ea - gf2_ea)
-# assert err_ea < conv_tol
-
-for iomega, omega in enumerate(omegas):
-    s = - numpy.trace(gf_fci[:, :, iomega].imag) / numpy.pi
-    print("% 8.4f, %8.4f" % (omega, s))
