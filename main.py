@@ -10,9 +10,9 @@ from epcc.fci import contract_pp
 from ephfcigf import eph_fcigf_ip, eph_fcigf_ea
 
 def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
-    eta = 0.01
-    gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, nph_max=nph_max, verbose=5, stdout=log)
-    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, nph_max=nph_max, verbose=5, stdout=log)
+    eta = 0.02
+    gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
+    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf_fci = gf1_ip + gf1_ea
 
     for iomega, omega in enumerate(omegas):
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-10.0, 10.0, nomega_total)
+    omegas = numpy.linspace(-5.0, 5.0, nomega_total)
     res    = solve(
         omegas[rank * nomega : (rank + 1) * nomega],
         nph_max=nph_max, m=m, log=open(log, 'w')
