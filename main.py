@@ -49,7 +49,7 @@ if __name__ == '__main__':
     nmode = 4
     nelec = (1, 0)
 
-    nph_max  = 10
+    nph_max  = 16
 
     m = HolModel(
         nsite, nmode, nelec[0] + nelec[1],
