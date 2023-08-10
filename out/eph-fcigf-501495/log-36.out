@@ -1,0 +1,53 @@
+nph_max = 8
+omegas  = 
+-3.9496
+ 2.7731
+ 9.4958
+
+
+Solving the IP Green's function.
+    CPU time for setup the FCI-GF problem      4.68 sec, wall time      9.31 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 6561,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 1.2947e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 6561,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 5.2298e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 6561,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 2.1733e-02
+    CPU time for solve the FCI-GF problem      0.06 sec, wall time      0.13 sec
+
+Solving the EA Green's function.
+    CPU time for setup the FCI-GF problem      4.88 sec, wall time      9.75 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 104976,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 8.3936e-02
+GMRES: iter =    2, residual = 1.6244e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 104976,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 6.5965e-01
+GMRES: iter =    2, residual = 3.5480e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 104976,  m =   40
+GMRES: tol = 1.00e-04, max_cycle =  100
+GMRES: iter =    1, residual = 6.6780e-02
+GMRES: iter =    2, residual = 5.4492e-02
+    CPU time for solve the FCI-GF problem     68.28 sec, wall time    136.46 sec
+
+omega =  -3.94957983, s =   0.00196026
+omega =   2.77310924, s =   0.02508794
+omega =   9.49579832, s =   0.00050871
