@@ -55,8 +55,8 @@ if __name__ == '__main__':
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-10.0, 10.0, nomega_total).reshape(nomega, size)
-    res    = solve(omegas[:, rank], nph_max=nph_max, m=m, log=open(log, 'w'))
+    omegas = numpy.linspace(-10.0, 10.0, nomega_total).reshape(size, nomega)
+    res    = solve(omegas[rank], nph_max=nph_max, m=m, log=open(log, 'w'))
     assert res.shape == (nomega, nsite, nsite)
 
     tmp = comm.gather(res, root=0)
@@ -64,9 +64,7 @@ if __name__ == '__main__':
     if rank == 0:
         gf_fci = numpy.concatenate(tmp, axis=0)
         assert gf_fci.shape == (nomega_total, nsite, nsite)
-        gf_fci = gf_fci.reshape(nomega, size, nsite, nsite).transpose(1, 0, 2, 3)
-        gf_fci = gf_fci.reshape(nomega_total, nsite, nsite)
 
-        for iomega, omega in enumerate(omegas):
+        for iomega, omega in enumerate(omegas.reshape(-1)):
             s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
             print("omega = % 6.4f, s = % 12.8f" % (omega, s))
