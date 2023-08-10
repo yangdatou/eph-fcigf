@@ -36,5 +36,5 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
 export PYTHONUNBUFFERED=TRUE;
-time python eph-fcigf.py
+time python main.py
 
