@@ -16,7 +16,7 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     gf_fci = gf1_ip + gf1_ea
 
     for iomega, omega in enumerate(omegas):
-        s = - numpy.trace(gf_fci[:, :, iomega].imag) / numpy.pi
+        s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
         log.write("omega = %f, s = %f\n" % (omega, s))
 
     return gf_fci
