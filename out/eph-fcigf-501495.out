@@ -1,0 +1,40 @@
+SLURM_NTASKS = 28
+OMP_NUM_THREADS = 1
+MKL_NUM_THREADS = 1
+OPENBLAS_NUM_THREADS = 1
+PYSCF_MAX_MEMORY = 256000
+ 
+:: initializing oneAPI environment ...
+   slurm_script: BASH_VERSION = 4.2.46(1)-release
+   args: Using "$@" for setvars.sh arguments: --force
+:: advisor -- latest
+:: ccl -- latest
+:: clck -- latest
+:: compiler -- latest
+:: dal -- latest
+:: debugger -- latest
+:: dev-utilities -- latest
+:: dnnl -- latest
+:: dpcpp-ct -- latest
+:: dpl -- latest
+:: inspector -- latest
+:: intelpython -- latest
+:: ipp -- latest
+:: ippcp -- latest
+:: ipp -- latest
+:: itac -- latest
+:: mkl -- latest
+:: mpi -- latest
+:: tbb -- latest
+:: vpl -- latest
+:: vtune -- latest
+:: oneAPI environment initialized ::
+ 
+Traceback (most recent call last):
+  File "/home/yangjunjie/work/eph-fcigf/main.py", line 72, in <module>
+    print("omega = % 6.4f, s = % 12.8f" % (omega, s))
+TypeError: only size-1 arrays can be converted to Python scalars
+
+real	12m49.724s
+user	0m0.018s
+sys	0m0.017s
