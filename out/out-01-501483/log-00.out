@@ -1,0 +1,371 @@
+
+Solving the IP Green's function.
+    CPU time for setup the FCI-GF problem      1.07 sec, wall time      1.07 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.1283e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.4031e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.7308e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.1283e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.6207e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 5.2466e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.0686e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 7.1966e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 8.8408e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.1469e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.6374e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.0997e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 9.8445e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.3700e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.4080e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.4848e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0734e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 8.4048e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.9065e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 5.8616e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 5.0913e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.5000e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.0318e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.6518e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.3373e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.0726e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.8469e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.6520e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.4821e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.3327e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.2003e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 1296,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.0820e-02
+    CPU time for solve the FCI-GF problem      0.28 sec, wall time      0.28 sec
+
+Solving the EA Green's function.
+    CPU time for setup the FCI-GF problem      1.09 sec, wall time      1.09 sec
+    CPU time for initialize the Hamiltonian      0.00 sec, wall time      0.00 sec
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.1641e-02
+GMRES: iter =    2, residual = 5.1616e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.4005e-02
+GMRES: iter =    2, residual = 5.5435e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.6654e-02
+GMRES: iter =    2, residual = 5.9890e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.9643e-02
+GMRES: iter =    2, residual = 6.5162e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 5.3041e-02
+GMRES: iter =    2, residual = 7.1510e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 5.6938e-02
+GMRES: iter =    2, residual = 7.9326e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.1453e-02
+GMRES: iter =    2, residual = 8.9225e-02
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.6745e-02
+GMRES: iter =    2, residual = 1.0226e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 7.3036e-02
+GMRES: iter =    2, residual = 1.2038e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 8.0635e-02
+GMRES: iter =    2, residual = 1.4781e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 9.0000e-02
+GMRES: iter =    2, residual = 1.9584e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.0183e-01
+GMRES: iter =    2, residual = 3.0920e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.1723e-01
+GMRES: iter =    2, residual = 1.0181e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.3813e-01
+GMRES: iter =    2, residual = 6.7077e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.6810e-01
+GMRES: iter =    2, residual = 6.4526e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.1467e-01
+GMRES: iter =    2, residual = 1.1359e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.9696e-01
+GMRES: iter =    2, residual = 1.0808e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 4.8161e-01
+GMRES: iter =    2, residual = 1.4804e+00
+GMRES: iter =    3, residual = 1.4807e+00
+GMRES: iter =    4, residual = 1.4805e+00
+GMRES: iter =    5, residual = 1.4805e+00
+GMRES: iter =    6, residual = 1.4805e+00
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.2740e+00
+GMRES: iter =    2, residual = 6.8719e-01
+GMRES: iter =    3, residual = 6.8719e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.9689e+00
+GMRES: iter =    2, residual = 9.7323e-01
+GMRES: iter =    3, residual = 9.7323e-01
+GMRES: iter =    4, residual = 9.7323e-01
+GMRES: iter =    5, residual = 9.7323e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 6.1994e-01
+GMRES: iter =    2, residual = 3.3900e-01
+GMRES: iter =    3, residual = 3.3902e-01
+GMRES: iter =    4, residual = 3.3902e-01
+GMRES: iter =    5, residual = 3.3902e-01
+GMRES: iter =    6, residual = 3.3902e-01
+GMRES: iter =    7, residual = 3.3902e-01
+GMRES: iter =    8, residual = 3.3902e-01
+GMRES: iter =    9, residual = 3.3902e-01
+GMRES: iter =   10, residual = 3.3902e-01
+GMRES: iter =   11, residual = 3.3902e-01
+GMRES: iter =   12, residual = 3.3902e-01
+GMRES: iter =   13, residual = 3.3902e-01
+GMRES: iter =   14, residual = 3.3902e-01
+GMRES: iter =   15, residual = 3.3902e-01
+GMRES: iter =   16, residual = 3.3902e-01
+GMRES: iter =   17, residual = 3.3902e-01
+GMRES: iter =   18, residual = 3.3902e-01
+GMRES: iter =   19, residual = 3.3902e-01
+GMRES: iter =   20, residual = 3.3902e-01
+GMRES: iter =   21, residual = 3.3902e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 3.2747e-01
+GMRES: iter =    2, residual = 1.9609e-01
+GMRES: iter =    3, residual = 1.9609e-01
+GMRES: iter =    4, residual = 1.9609e-01
+GMRES: iter =    5, residual = 1.9609e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 2.2937e-01
+GMRES: iter =    2, residual = 1.4756e-01
+GMRES: iter =    3, residual = 1.4756e-01
+GMRES: iter =    4, residual = 1.4756e-01
+GMRES: iter =    5, residual = 1.4756e-01
+GMRES: iter =    6, residual = 1.4756e-01
+GMRES: iter =    7, residual = 1.4756e-01
+GMRES: iter =    8, residual = 1.4756e-01
+GMRES: iter =    9, residual = 1.4756e-01
+GMRES: iter =   10, residual = 1.4756e-01
+GMRES: iter =   11, residual = 1.4756e-01
+GMRES: iter =   12, residual = 1.4756e-01
+GMRES: iter =   13, residual = 1.4756e-01
+GMRES: iter =   14, residual = 1.4756e-01
+GMRES: iter =   15, residual = 1.4756e-01
+GMRES: iter =   16, residual = 1.4756e-01
+GMRES: iter =   17, residual = 1.4756e-01
+GMRES: iter =   18, residual = 1.4756e-01
+GMRES: iter =   19, residual = 1.4756e-01
+GMRES: iter =   20, residual = 1.4756e-01
+GMRES: iter =   21, residual = 1.4756e-01
+GMRES: iter =   22, residual = 1.4756e-01
+GMRES: iter =   23, residual = 1.4756e-01
+GMRES: iter =   24, residual = 1.4756e-01
+
+GMRES Start
+GMRES: nb  =    4, n = 20736,  m =   40
+GMRES: tol = 1.00e-08, max_cycle =  100
+GMRES: iter =    1, residual = 1.7682e-01
+GMRES: iter =    2, residual = 1.2014e-01
+GMRES: iter =    3, residual = 1.2014e-01
+GMRES: iter =    4, residual = 1.2014e-01
+GMRES: iter =    5, residual = 1.2014e-01
+GMRES: iter =    6, residual = 1.2014e-01
+GMRES: iter =    7, residual = 1.2014e-01
+GMRES: iter =    8, residual = 1.2014e-01
