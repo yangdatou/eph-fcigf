@@ -55,7 +55,7 @@ if __name__ == '__main__':
         nph_max=nph_max, m=m, log=open(log, 'w')
     )
 
-    assert tmp.shape == (nomega, nsite, nsite)
+    assert res.shape == (nomega, nsite, nsite)
     print("Rank %d finished." % rank)
 
     tmp = comm.gather(res, root=0)
