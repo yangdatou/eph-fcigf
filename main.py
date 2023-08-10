@@ -15,6 +15,7 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf_fci = gf1_ip + gf1_ea
 
+    log.write("\n")
     for iomega, omega in enumerate(omegas):
         s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
         log.write("omega = %f, s = %f\n" % (omega, s))
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-5.0, 5.0, nomega_total)
+    omegas = numpy.linspace(-10.0, 10.0, nomega_total)
     res    = solve(
         omegas[rank * nomega : (rank + 1) * nomega],
         nph_max=nph_max, m=m, log=open(log, 'w')
@@ -64,4 +65,4 @@ if __name__ == '__main__':
 
         for iomega, omega in enumerate(omegas):
             s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
-            print("omega = % 6.4f, s = % 6.4f" % (omega, s))
+            print("omega = % 6.4f, s = % 12.8f" % (omega, s))
