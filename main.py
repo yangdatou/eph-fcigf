@@ -22,8 +22,6 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     return gf_fci
 
 if __name__ == '__main__':
-    import h5py
-    from pyscf.lib import chkfile
     from mpi4py import MPI
 
     comm = MPI.COMM_WORLD
@@ -35,7 +33,6 @@ if __name__ == '__main__':
     assert nomega * size == nomega_total
 
     log = "%s/log-%02d.out" % (os.environ['LOG_TMPDIR'], rank)
-    tmp = "%s/tmp-%02d.h5"  % (os.environ['LOG_TMPDIR'], rank)
 
     nsite = 4
     nmode = 4
@@ -53,18 +50,20 @@ if __name__ == '__main__':
     m.nb = 0
 
     omegas = numpy.linspace(-0.5, 0.5, nomega_total)
-    tmp    = solve(
+    res    = solve(
         omegas[rank * nomega : (rank + 1) * nomega],
-        nph_max=nph_max, m=m, log=open(log, 'w'), tmp=h5py.File(tmp, 'w')
-        )
+        nph_max=nph_max, m=m, log=open(log, 'w')
+    )
 
     assert tmp.shape == (nomega, nsite, nsite)
     print("Rank %d finished." % rank)
 
-    gf_fci = comm.gather(tmp, root=0)
+    tmp = comm.gather(res, root=0)
 
     if rank == 0:
-        gf_fci = numpy.concatenate(gf_fci, axis=0)
+        gf_fci = numpy.concatenate(tmp, axis=0)
+        assert gf_fci.shape == (nomega_total, nsite, nsite)
+
         for iomega, omega in enumerate(omegas):
-            s = - numpy.trace(gf_fci[:, :, iomega].imag) / numpy.pi
+            s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
             print("omega = % 6.4f, s = % 6.4f" % (omega, s))
