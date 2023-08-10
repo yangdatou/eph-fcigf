@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --partition=debug
-#SBATCH --time=01:00:00
+#SBATCH --time=00:05:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=28
+#SBATCH --ntasks-per-node=4
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
 #SBATCH --exclude=pauling013
