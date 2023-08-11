@@ -10,10 +10,15 @@
 
 export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID/
 export PYSCF_TMPDIR=TMPDIR
+echo $TMPDIR
 mkdir -p $TMPDIR
 
 export LOG_TMPDIR=$SLURM_SUBMIT_DIR/out/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+echo $LOG_TMPD
 mkdir -p $LOG_TMPD
+
+echo TMPDIR=$TMPDIR
+echo LOG_TMPDIR=$LOG_TMPDIR
 
 ln -s /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log $LOG_TMPDIR/slurm.out
 
@@ -49,4 +54,6 @@ for nmpi in 64 16 04 01; do
 
     time mpirun -n $nmpi python main.py
 done
+
+cp /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log $LOG_TMPDIR/slurm.out
 

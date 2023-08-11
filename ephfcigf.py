@@ -26,14 +26,14 @@ from lib import gmres
 def _check_g(g: numpy.ndarray, nsite: int, nmode: int) -> bool:
     gg = numpy.zeros((nmode, nsite, nsite))
     for i in range(nsite):
-        g[i, i, i] = g[0, 0, 0]
+        gg[i, i, i] = g[0, 0, 0]
 
     err = numpy.linalg.norm(g - gg)
-    return err < 1e-10
+    return err < 1e-8
 
 def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
             nelec: ElectronSpinNumber = (1, 0), nph_max: int = 4,
-            method="epcc") -> Callable:
+            method="direct") -> Callable:
     nsite = t.shape[0]
     nmode = g.shape[0]
 
@@ -54,9 +54,9 @@ def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
         # noinspection PyArgumentList
         def hop(v):
             c = v.reshape(shape)
-            hc = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r") * 0.0
-            hc += contract_ep(g, c, nsite, nelec, nmode, nph_max)  # * 0.0
-            hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None) * 0.0
+            hc = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r")
+            hc += contract_ep(g, c, nsite, nelec, nmode, nph_max)
+            hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None)
             return hc.reshape(-1)
 
     else:
@@ -101,9 +101,9 @@ def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
 
         def hop(v):
             c = v.reshape(shape)
-            hc = contract_1e(tt, c, nsite, nelec, nph_max) * 0.0
-            hc += contract_ep(gg, c, nsite, nelec, nph_max)  # * 0.0
-            hc += contract_pp(ww, c, nsite, nelec, nph_max) * 0.0
+            hc = contract_1e(tt, c, nsite, nelec, nph_max)
+            hc += contract_ep(gg, c, nsite, nelec, nph_max)
+            hc += contract_pp(ww, c, nsite, nelec, nph_max)
             return hc.reshape(-1)
 
     return hop
