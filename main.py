@@ -17,10 +17,10 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
         log.write("% 6.4f\n" % omega)
     log.write("\n")
 
-    eta = 0.04
-    gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
+    eta = 0.08
+    # gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
-    gf_fci = gf1_ip + gf1_ea
+    gf_fci = gf1_ea
 
     log.write("\n")
     for iomega, omega in enumerate(omegas):
@@ -45,21 +45,21 @@ if __name__ == '__main__':
 
     log = "%s/%02d.log" % (os.environ['LOG_TMPDIR'], rank)
 
-    nsite = 4
-    nmode = 4
+    nsite = 6
+    nmode = 6
     nelec = (1, 0)
 
     nph_max  = 16
 
     m = HolModel(
         nsite, nmode, nelec[0] + nelec[1],
-        1.0, 0.1, bc='p', gij=None,
+        1.0, 1.1, bc='p', gij=None,
         ca=numpy.eye(nsite), cb=None
     )
     m.na = 1
     m.nb = 0
 
-    omegas = numpy.linspace(-10.0, 10.0, nomega_total).reshape(size, nomega)
+    omegas = numpy.linspace(-2.0, 6.0, nomega_total).reshape(size, nomega)
     res    = solve(omegas[rank], nph_max=nph_max, m=m, log=open(log, 'w'))
     assert res.shape == (nomega, nsite, nsite)
 

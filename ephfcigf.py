@@ -54,9 +54,9 @@ def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
         # noinspection PyArgumentList
         def hop(v):
             c = v.reshape(shape)
-            hc = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r") * 0.0
+            hc  = contract_1e(t, c, nsite, nelec, nmode, nph_max, e_only=False, space="r") # * 0.0
             hc += contract_ep(g, c, nsite, nelec, nmode, nph_max)  # * 0.0
-            hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None) * 0.0
+            hc += contract_pp(w, c, nsite, nelec, nmode, nph_max, xi=None) # * 0.0
             return hc.reshape(-1)
 
     else:
@@ -101,9 +101,9 @@ def gen_hop(t: numpy.ndarray, g: numpy.ndarray, w: numpy.ndarray,
 
         def hop(v):
             c = v.reshape(shape)
-            hc = contract_1e(tt, c, nsite, nelec, nph_max) * 0.0
+            hc  = contract_1e(tt, c, nsite, nelec, nph_max)  # * 0.0
             hc += contract_ep(gg, c, nsite, nelec, nph_max)  # * 0.0
-            hc += contract_pp(ww, c, nsite, nelec, nph_max) * 0.0
+            hc += contract_pp(ww, c, nsite, nelec, nph_max)  # * 0.0
             return hc.reshape(-1)
 
     return hop
