@@ -1,19 +1,26 @@
 #!/bin/bash
 #SBATCH --partition=debug
-#SBATCH --time=00:05:00
+#SBATCH --time=01:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=28
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
 #SBATCH --exclude=pauling013
+#SBATCH --output=/scratch/global/yangjunjie/slurm-%x-%j.log
 
-export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
-export PYSCF_TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID
-export LOG_TMPDIR=$SLURM_SUBMIT_DIR/out/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+export TMPDIR=/scratch/global/yangjunjie/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+export PYSCF_TMPDIR=TMPDIR
+echo $TMPDIR
 mkdir -p $TMPDIR
-mkdir -p $LOG_TMPDIR
 
-#SBATCH --output=./out/%x-%j/slurm.log
+export LOG_TMPDIR=$SLURM_SUBMIT_DIR/out/$SLURM_JOB_NAME-$SLURM_JOB_ID/
+echo $LOG_TMPD
+mkdir -p $LOG_TMPD
+
+echo TMPDIR=$TMPDIR
+echo LOG_TMPDIR=$LOG_TMPDIR
+
+ln -s /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log $LOG_TMPDIR/slurm.out
 
 module purge
 module load gcc/9.2.0
@@ -40,5 +47,13 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/epcc-hol/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
-time \
-mpirun -n 40 python main.py
+for nmpi in 64 16 04 01; do
+    echo nmpi=$nmpi
+    export LOG_TMPDIR=$SLURM_SUBMIT_DIR/out/$SLURM_JOB_NAME-$SLURM_JOB_ID/$nmpi/
+    mkdir -p $LOG_TMPDIR
+
+    time mpirun -n $nmpi python main.py
+done
+
+cp /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log $LOG_TMPDIR/slurm.out
+

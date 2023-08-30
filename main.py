@@ -39,7 +39,7 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    nomega_total = 160
+    nomega_total = 128
     nomega = nomega_total // size
     assert nomega * size == nomega_total
 
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     nmode = 6
     nelec = (1, 0)
 
-    nph_max  = 16
+    nph_max  = 8
 
     m = HolModel(
         nsite, nmode, nelec[0] + nelec[1],
