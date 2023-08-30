@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --partition=serial
-#SBATCH --time=02:00:00
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=28
+#SBATCH --partition=debug
+#SBATCH --time=01:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=20
 #SBATCH --mem=0
 #SBATCH --job-name=eph-fcigf
 #SBATCH --exclude=pauling013
@@ -44,7 +44,7 @@ export PYTHONPATH=/home/yangjunjie/work/cc-eph/epcc-hol/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/wick-dev/:$PYTHONPATH
 export PYTHONPATH=/home/yangjunjie/work/cc-eph/cqcpy-master/:$PYTHONPATH
 
-time mpirun -n 64 python main.py
+time mpirun -n 20 python main.py
 
 cp /scratch/global/yangjunjie/slurm-$SLURM_JOB_NAME-$SLURM_JOB_ID.log $LOG_TMPDIR/slurm.out
 
