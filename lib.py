@@ -31,7 +31,7 @@ def _unpack(v=None, vs=None):
 def gmres(h, bs: OptionalArray = None, b: OptionalArray = None,
           xs0: OptionalArray = None, x0: OptionalArray = None,
           diag: OptionalArray = None,
-          m: int = 30, tol: float = 1e-6, max_cycle: int = 200,
+          m: int = 100, tol: float = 1e-6, max_cycle: int = 200,
           verbose=0, stdout: typing.TextIO = sys.stdout) -> numpy.ndarray:
     """Solve a linear system using the GMRES algorithm.
 
@@ -139,7 +139,9 @@ def gmres(h, bs: OptionalArray = None, b: OptionalArray = None,
     )
 
     if info > 0:
-        raise ValueError(f"Convergence to tolerance not achieved in {info} iterations")
+        print(f"Convergence to tolerance not achieved in {info} iterations")
+        res = hop.matvec(xs) - bs.reshape(-1)
+        print(f"Final residual norm = {numpy.linalg.norm(res) / nb:6.4e}")
 
     if nb == 1:
         xs = xs.reshape(n, )

@@ -17,9 +17,9 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
         log.write("% 6.4f\n" % omega)
     log.write("\n")
 
-    eta = 0.08
-    # gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
-    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
+    eta = 0.4
+    # gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, max_cycle=10, conv_tol=1e-2, nph_max=nph_max, verbose=5, stdout=log)
+    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, max_cycle=40, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
     gf_fci = gf1_ea
 
     log.write("\n")
@@ -40,32 +40,34 @@ if __name__ == '__main__':
     # size = comm.Get_size()
 
     # nomega_total = 26
-    nomega = 26 # nomega_total // size
-    # assert nomega * size == nomega_total
+    for nph_max in [2, 4, 6]:
+        for g in [1.1, 1.5, 2.0]:
+            nomega = 26 # nomega_total // size
+            # assert nomega * size == nomega_total
 
-    log = "/Users/yangjunjie/work/cc-eph/eph-fcigf/out/tmp/log.out"
+            log = "/Users/yangjunjie/work/cc-eph/eph-fcigf/out/tmp/log.out"
 
-    nsite = 6
-    nmode = 6
-    nelec = (1, 0)
+            nsite = 6
+            nmode = 6
+            nelec = (1, 0)
 
-    nph_max  = 8
+            m = HolModel(
+                nsite, nmode, nelec[0] + nelec[1],
+                1.0, g, bc='p', gij=None,
+                ca=numpy.eye(nsite),
+                cb=numpy.eye(nsite)
+            )
+            m.na = 1
+            m.nb = 0
 
-    m = HolModel(
-        nsite, nmode, nelec[0] + nelec[1],
-        1.0, 1.1, bc='p', gij=None,
-        ca=numpy.eye(nsite),
-        cb=numpy.eye(nsite)
-    )
-    m.na = 1
-    m.nb = 0
+            omegas = numpy.linspace(-10.0, 0.0, nomega)
+            gf_fci = solve(-omegas, nph_max=nph_max, m=m, log=sys.stdout)
+            assert gf_fci.shape == (nomega, nsite, nsite)
 
-    omegas = numpy.linspace(-2.0, 6.0, nomega)
-    gf_fci = solve(omegas, nph_max=nph_max, m=m, log=open(log, 'w'))
-    assert gf_fci.shape == (nomega, nsite, nsite)
-
-    with open("gf.out", 'w') as f:
-        for iomega, omega in enumerate(omegas):
-            s = - numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
-            print("omega = % 6.4f, s = % 12.8f" % (omega, s))
-            f.write("% 6.4f, % 12.8f\n" % (omega, s))
+            label = "CC-GF" if nph_max == 2 else "FCI-GF(%d)" % (2 ** (nph_max-2))
+            f = f"./out/gf-{label}-g-{g}-2.out"
+            with open(f, 'w') as f:
+                for iomega, omega in enumerate(omegas):
+                    s = numpy.trace(gf_fci[iomega, :, :].imag) / numpy.pi
+                    print("% 6.4f, % 12.8f" % (omega, s))
+                    f.write("% 6.4f, % 12.8f\n" % (omega, s))
