@@ -17,9 +17,9 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
         log.write("% 6.4f\n" % omega)
     log.write("\n")
 
-    eta = 0.4
+    eta = 0.8
     # gf1_ip = eph_fcigf_ip(m, omegas, ps=None, qs=None, eta=eta, max_cycle=10, conv_tol=1e-2, nph_max=nph_max, verbose=5, stdout=log)
-    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, max_cycle=40, conv_tol=1e-4, nph_max=nph_max, verbose=5, stdout=log)
+    gf1_ea = eph_fcigf_ea(m, omegas, ps=None, qs=None, eta=eta, max_cycle=40, conv_tol=1e-2, nph_max=nph_max, verbose=5, stdout=log)
     gf_fci = gf1_ea
 
     log.write("\n")
