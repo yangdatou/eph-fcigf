@@ -33,22 +33,23 @@ def solve(omegas, nph_max=10, m=None, log=sys.stdout, tmp=None):
     return gf_fci
 
 if __name__ == '__main__':
-    # from mpi4py import MPI
+    from mpi4py import MPI
     #
-    # comm = MPI.COMM_WORLD
-    # rank = comm.Get_rank()
-    # size = comm.Get_size()
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-    # nomega_total = 26
+    nomega_total = 100
     for nph_max in [2, 4, 6]:
-        for g in [1.1, 1.5, 2.0]:
-            nomega = 26 # nomega_total // size
-            # assert nomega * size == nomega_total
+        for g in [1.0, numpy.sqrt(2.0), 2.0]:
+            nomega = nomega_total // size
+            assert nomega * size == nomega_total
 
             log = "/Users/yangjunjie/work/cc-eph/eph-fcigf/out/tmp/log.out"
+            log = open(log, 'w')
 
-            nsite = 6
-            nmode = 6
+            nsite = 4
+            nmode = 4
             nelec = (1, 0)
 
             m = HolModel(
@@ -60,7 +61,7 @@ if __name__ == '__main__':
             m.na = 1
             m.nb = 0
 
-            omegas = numpy.linspace(-10.0, 0.0, nomega)
+            omegas = numpy.linspace(-10.0, 10.0, nomega)
             gf_fci = solve(-omegas, nph_max=nph_max, m=m, log=sys.stdout)
             assert gf_fci.shape == (nomega, nsite, nsite)
 
